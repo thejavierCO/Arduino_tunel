@@ -73,14 +73,19 @@ class DigitalActuator: public DigitalPin{
 };
 
 class AnalogActuator: public AnalogPin{
+    private:
+        bool _state = false;
   public:
     AnalogActuator(int pin):AnalogPin(pin){}
     void Set(int number){
       this->Write(number);
     }
+    bool If(int value){
+        return this->_state==value;
+    }
     void Switch(int rangeOn, int rangeOff){
-      if(this->If(rangeOn))this->Set(rangeOff);
-      else if(this->If(rangeOff))this->Set(rangeOn);
+      if(this->If(false))this->Set(rangeOn);
+      else if(this->If(true))this->Set(rangeOff);
     }
 };
 
@@ -101,8 +106,19 @@ class Led: public DigitalActuator{
 };
 
 class LedPWM: public AnalogActuator{
+  private:
+    AsyncDelay TimerLed;
   public:
     LedPWM(int pin):AnalogActuator(pin){}
+    void useTimeBlink(unsigned long time){
+      this->TimerLed.start(time, AsyncDelay::MILLIS);
+    }
+    void blink(int min,int max){
+      if(this->TimerLed.isExpired()){
+        this->Switch(0,5);
+        this->TimerLed.repeat();
+      }
+    }
 };
 
 //-------------------------------------
