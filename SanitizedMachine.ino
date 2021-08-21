@@ -83,6 +83,16 @@ class AnalogActuator: public AnalogPin{
     }
 };
 
+class Led: public DigitalActuator{
+  public:
+    Led(int pin):DigitalActuator(pin){}
+};
+
+class LedPWM: public AnalogActuator{
+  public:
+    LedPWM(int pin):AnalogActuator(pin){}
+};
+
 //-------------------------------------
 /*
     Debug
