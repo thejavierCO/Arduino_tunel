@@ -14,5 +14,5 @@ void setup() {
 }
 
 void loop() {
-  Led_state.blink(0,100);
+  Led_state.blink();
 }
