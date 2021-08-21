@@ -105,19 +105,35 @@ class Led: public DigitalActuator{
     }
 };
 
-class LedPWM: public AnalogActuator{
-  private:
-    AsyncDelay TimerLed;
+// class LedPWM: public AnalogActuator{
+//   private:
+//     AsyncDelay TimerLed;
+//   public:
+//     LedPWM(int pin):AnalogActuator(pin){}
+//     void useTimeBlink(unsigned long time){
+//       this->TimerLed.start(time, AsyncDelay::MILLIS);
+//     }
+//     void blink(int min,int max){
+//       if(this->TimerLed.isExpired()){
+//         this->Switch(0,5);
+//         this->TimerLed.repeat();
+//       }
+//     }
+// };
+
+class LedPWM:public AnalogActuator{
   public:
     LedPWM(int pin):AnalogActuator(pin){}
-    void useTimeBlink(unsigned long time){
-      this->TimerLed.start(time, AsyncDelay::MILLIS);
-    }
-    void blink(int min,int max){
-      if(this->TimerLed.isExpired()){
-        this->Switch(0,5);
-        this->TimerLed.repeat();
+    void to(int time, int start = 0,int end = 0){
+      if(start==0&&end==0)Serial.println("test");
+      else{
+        while(start>end){this->Set(start);start--;delay(time);}
+        while(start<end){this->Set(start);start++;delay(time);}
       }
+    }
+    void blink(int time, int max = 255){
+      this->to(time/2,0,max); 
+      this->to(time/2,max,0);
     }
 };
 

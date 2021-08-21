@@ -10,9 +10,18 @@ void setup() {
   Relay.Out();
 
   Msg.init();
-  Led_state.useTimeBlink(1000);
+  Timer.set(1000,AsyncDelay::MILLIS);
 }
 
 void loop() {
-  Led_state.blink();
+  while(Selector_timer.If(true)&&Selector_sensor.If(false)){
+  }
+  while(Selector_timer.If(false)&&Selector_sensor.If(true)){
+  }
+  while(Selector_timer.If(false)&&Selector_sensor.If(false)){
+    Led_state.to(30,5,0);
+    Serial.println(Sensor_PIR.Read());
+    Led_state.to(30,0,5);
+  }
+  Led_state.Set(0);
 }
