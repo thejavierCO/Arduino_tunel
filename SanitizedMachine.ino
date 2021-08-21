@@ -3,7 +3,6 @@
     Basic Class
 */
 //-------------------------------------
-
 class Pin{
   private:
     int _pin = 0;
