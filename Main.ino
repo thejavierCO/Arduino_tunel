@@ -8,17 +8,19 @@ void setup() {
   Led_test.Out();
   Led_state.Out();
   Relay.Out();
-
   Msg.init();
 }
 
 void loop() {
   while(Selector_timer.If(true)&&Selector_sensor.If(false)){
+    // Led_test.Set(0);
   }
   while(Selector_timer.If(false)&&Selector_sensor.If(true)){
   }
   while(Selector_timer.If(false)&&Selector_sensor.If(false)){
-    Led_state.blink(2000,255,Selector_timer.If(false)&&Selector_sensor.If(false)?false:true);
+      Led_state.blink(1000,10);
+      Led_state.blink(1000,100);
+      Led_state.blink(1000,200);
   }
   Led_state.Set(0);
 }
