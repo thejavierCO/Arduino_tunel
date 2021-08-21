@@ -1,3 +1,5 @@
+#include <AsyncDelay.h>
+
 //-------------------------------------
 /*
     Basic Class
@@ -83,15 +85,24 @@ class AnalogActuator: public AnalogPin{
 };
 
 class Led: public DigitalActuator{
+  private:
+    AsyncDelay TimerLed;
   public:
     Led(int pin):DigitalActuator(pin){}
+    void blink(long time){
+      this->TimerLed.start(time, AsyncDelay::MILLIS);
+      if(this->TimerLed.isExpired()){
+        this->Switch();
+        this->TimerLed.repeat();
+      }
+      Serial.println(this->TimerLed.getDuration());
+    }
 };
 
 class LedPWM: public AnalogActuator{
   public:
     LedPWM(int pin):AnalogActuator(pin){}
 };
-
 
 //-------------------------------------
 /*
@@ -103,6 +114,7 @@ class SerialConsole{
   private:
     int _baud = 9600;
   public:
+    SerialConsole(){}
     SerialConsole(int baud){
       if(baud==0)this->_baud = 9600;
       else this->_baud = baud;
