@@ -91,11 +91,11 @@ class Led: public DigitalActuator{
     Led(int pin):DigitalActuator(pin){}
     void blink(long time){
       this->TimerLed.start(time, AsyncDelay::MILLIS);
-      if(this->TimerLed.isExpired()){
-        this->Switch();
-        this->TimerLed.repeat();
-      }
-      Serial.println(this->TimerLed.getDuration());
+      // if(this->TimerLed.isExpired()){
+      //   this->Switch();
+      //   this->TimerLed.repeat();
+      // }
+      Serial.println(this->TimerLed.getExpiry());
     }
 };
 
