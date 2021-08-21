@@ -10,8 +10,9 @@ void setup() {
   Relay.Out();
 
   Msg.init();
+  Led_state.useTimeBlink(1000);
 }
 
 void loop() {
-  Led_state.blink(100);
+  Led_state.blink();
 }
