@@ -1,3 +1,9 @@
+//-------------------------------------
+/*
+    Basic Class
+*/
+//-------------------------------------
+
 class Pin{
   private:
     int _pin = 0;
@@ -44,6 +50,12 @@ class AnalogPin: public Pin {
     }
 };
 
+//-------------------------------------
+/*
+    Tools
+*/
+//-------------------------------------
+
 class DigitalActuator: public DigitalPin{
   public:
     DigitalActuator(int pin):DigitalPin(pin){}
@@ -71,6 +83,12 @@ class AnalogActuator: public AnalogPin{
     }
 };
 
+//-------------------------------------
+/*
+    Debug
+*/
+//-------------------------------------
+
 class SerialConsole{
   private:
     int _baud = 9600;
@@ -82,10 +100,10 @@ class SerialConsole{
     void init(){
       Serial.begin(this->_baud);
     }
-    void Text(char a[]){
-      Serial.println(a);
+    void ReadDigital(DigitalActuator obj){
+      Serial.println(obj.Read());
     }
-    void Bool(bool a){
-      Serial.println(a);
+    void ReadAnalog(AnalogActuator obj){
+      Serial.println(obj.Read());
     }
 };
