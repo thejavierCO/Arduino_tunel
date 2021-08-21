@@ -70,3 +70,22 @@ class AnalogActuator: public AnalogPin{
       else if(this->If(rangeOff))this->Set(rangeOn);
     }
 };
+
+class SerialConsole{
+  private:
+    int _baud = 9600;
+  public:
+    SerialConsole(int baud){
+      if(baud==0)this->_baud = 9600;
+      else this->_baud = baud;
+    }
+    void init(){
+      Serial.begin(this->_baud);
+    }
+    void Text(char a[]){
+      Serial.println(a);
+    }
+    void Bool(bool a){
+      Serial.println(a);
+    }
+};
