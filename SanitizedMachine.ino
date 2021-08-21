@@ -122,21 +122,40 @@ class Led: public DigitalActuator{
 // };
 
 class LedPWM:public AnalogActuator{
+  private:
+    AsyncDelay TimerLed;
   public:
     LedPWM(int pin):AnalogActuator(pin){}
-    void to(int time, int start = 0,int end = 0){
+    void to(int time, int start = 0,int end = 0,bool forceStop = false){
       if(start==0&&end==0)Serial.println("test");
       else{
+        // AsyncDelay TimerCicle(time,AsyncDelay::MILLIS);
         unsigned long TimeDelay;
         TimeDelay = time/start;
-        while(start>end){this->Set(start);start--;delay(TimeDelay);}
+        this->TimerLed.start(TimeDelay,AsyncDelay::MILLIS);
+        while(start>end){
+          if(this->TimerLed.isExpired()){
+            this->Set(start);
+            start--;
+            if(forceStop!=false){this->TimerLed.expire();break;}
+            else this->TimerLed.repeat();
+          }else if(forceStop!=false){this->TimerLed.expire();break;}
+        }
         TimeDelay = time/end;
-        while(start<end){this->Set(start);start++;delay(TimeDelay);}
+        this->TimerLed.start(TimeDelay,AsyncDelay::MILLIS);
+        while(start<end){
+          if(this->TimerLed.isExpired()){
+            this->Set(start);
+            start++;
+            if(forceStop!=false){this->TimerLed.expire();break;}
+            else this->TimerLed.repeat();
+          }else if(forceStop!=false){this->TimerLed.expire();break;}
+        }
       }
     }
-    void blink(int time, int max = 255){
-      this->to(time/2,0,max); 
-      this->to(time/2,max,0);
+    void blink(int time, int max = 255,bool Condicions = false){
+      this->to(time/2,0,max,Condicions); 
+      this->to(time/2,max,0,Condicions);
     }
 };
 

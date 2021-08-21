@@ -18,9 +18,7 @@ void loop() {
   while(Selector_timer.If(false)&&Selector_sensor.If(true)){
   }
   while(Selector_timer.If(false)&&Selector_sensor.If(false)){
-    Led_state.to(1000,100,0);
-    Serial.println(Sensor_PIR.Read());
-    Led_state.to(1000,0,100);
+    Led_state.blink(2000,255,Selector_timer.If(false)&&Selector_sensor.If(false)?false:true);
   }
   Led_state.Set(0);
 }
