@@ -127,8 +127,11 @@ class LedPWM:public AnalogActuator{
     void to(int time, int start = 0,int end = 0){
       if(start==0&&end==0)Serial.println("test");
       else{
-        while(start>end){this->Set(start);start--;delay(time);}
-        while(start<end){this->Set(start);start++;delay(time);}
+        unsigned long TimeDelay;
+        TimeDelay = time/start;
+        while(start>end){this->Set(start);start--;delay(TimeDelay);}
+        TimeDelay = time/end;
+        while(start<end){this->Set(start);start++;delay(TimeDelay);}
       }
     }
     void blink(int time, int max = 255){
