@@ -3,7 +3,7 @@
 
 ### Estructura de los archivos
 ---
-- SanitizendMachine.ino
+- Project.ino
 Libreria de clases para agilizar la estructra de los procesos
 
 - Config.ino
@@ -15,4 +15,4 @@ Establecimiento de el aranque del programa
 ### More Info
 
 _Use_
-- Arduino Uno
+- Arduino One
